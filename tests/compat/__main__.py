@@ -6,11 +6,8 @@
 #
 import unittest
 
-suite = unittest.TestLoader().loadTestsFromNames(
-    ['tests.compat.test_integer.suite',
-     'tests.compat.test_octets.suite']
-)
+suite = unittest.TestLoader().loadTestsFromNames(["tests.compat.test_integer.suite", "tests.compat.test_octets.suite"])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.TextTestRunner(verbosity=2).run(suite)

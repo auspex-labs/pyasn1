@@ -10,9 +10,21 @@ from pyasn1 import error
 from pyasn1.type import tag
 from pyasn1.type import univ
 
-__all__ = ['NumericString', 'PrintableString', 'TeletexString', 'T61String', 'VideotexString',
-           'IA5String', 'GraphicString', 'VisibleString', 'ISO646String',
-           'GeneralString', 'UniversalString', 'BMPString', 'UTF8String']
+__all__ = [
+    "NumericString",
+    "PrintableString",
+    "TeletexString",
+    "T61String",
+    "VideotexString",
+    "IA5String",
+    "GraphicString",
+    "VisibleString",
+    "ISO646String",
+    "GeneralString",
+    "UniversalString",
+    "BMPString",
+    "UTF8String",
+]
 
 NoValue = univ.NoValue
 noValue = univ.noValue
@@ -55,6 +67,7 @@ class AbstractCharacterString(univ.OctetString):
     """
 
     if sys.version_info[0] <= 2:
+
         def __str__(self):
             try:
                 # `str` is Py2 text representation
@@ -63,8 +76,7 @@ class AbstractCharacterString(univ.OctetString):
             except UnicodeEncodeError:
                 exc = sys.exc_info()[1]
                 raise error.PyAsn1UnicodeEncodeError(
-                    "Can't encode string '%s' with codec "
-                    "%s" % (self._value, self.encoding), exc
+                    "Can't encode string '%s' with codec " "%s" % (self._value, self.encoding), exc
                 )
 
         def __unicode__(self):
@@ -77,7 +89,7 @@ class AbstractCharacterString(univ.OctetString):
                 elif isinstance(value, str):
                     return value.decode(self.encoding)
                 elif isinstance(value, (tuple, list)):
-                    return self.prettyIn(''.join([chr(x) for x in value]))
+                    return self.prettyIn("".join([chr(x) for x in value]))
                 elif isinstance(value, univ.OctetString):
                     return value.asOctets().decode(self.encoding)
                 else:
@@ -85,10 +97,7 @@ class AbstractCharacterString(univ.OctetString):
 
             except (UnicodeDecodeError, LookupError):
                 exc = sys.exc_info()[1]
-                raise error.PyAsn1UnicodeDecodeError(
-                    "Can't decode string '%s' with codec "
-                    "%s" % (value, self.encoding), exc
-                )
+                raise error.PyAsn1UnicodeDecodeError("Can't decode string '%s' with codec " "%s" % (value, self.encoding), exc)
 
         def asOctets(self, padding=True):
             return str(self)
@@ -97,6 +106,7 @@ class AbstractCharacterString(univ.OctetString):
             return tuple([ord(x) for x in str(self)])
 
     else:
+
         def __str__(self):
             # `unicode` is Py3 text representation
             return str(self._value)
@@ -107,8 +117,7 @@ class AbstractCharacterString(univ.OctetString):
             except UnicodeEncodeError:
                 exc = sys.exc_info()[1]
                 raise error.PyAsn1UnicodeEncodeError(
-                    "Can't encode string '%s' with codec "
-                    "%s" % (self._value, self.encoding), exc
+                    "Can't encode string '%s' with codec " "%s" % (self._value, self.encoding), exc
                 )
 
         def prettyIn(self, value):
@@ -126,10 +135,7 @@ class AbstractCharacterString(univ.OctetString):
 
             except (UnicodeDecodeError, LookupError):
                 exc = sys.exc_info()[1]
-                raise error.PyAsn1UnicodeDecodeError(
-                    "Can't decode string '%s' with codec "
-                    "%s" % (value, self.encoding), exc
-                )
+                raise error.PyAsn1UnicodeDecodeError("Can't decode string '%s' with codec " "%s" % (value, self.encoding), exc)
 
         def asOctets(self, padding=True):
             return bytes(self)
@@ -163,10 +169,8 @@ class NumericString(AbstractCharacterString):
     #: Set (on class, not on instance) or return a
     #: :py:class:`~pyasn1.type.tag.TagSet` object representing ASN.1 tag(s)
     #: associated with |ASN.1| type.
-    tagSet = AbstractCharacterString.tagSet.tagImplicitly(
-        tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 18)
-    )
-    encoding = 'us-ascii'
+    tagSet = AbstractCharacterString.tagSet.tagImplicitly(tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 18))
+    encoding = "us-ascii"
 
     # Optimization for faster codec lookup
     typeId = AbstractCharacterString.getTypeId()
@@ -178,10 +182,8 @@ class PrintableString(AbstractCharacterString):
     #: Set (on class, not on instance) or return a
     #: :py:class:`~pyasn1.type.tag.TagSet` object representing ASN.1 tag(s)
     #: associated with |ASN.1| type.
-    tagSet = AbstractCharacterString.tagSet.tagImplicitly(
-        tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 19)
-    )
-    encoding = 'us-ascii'
+    tagSet = AbstractCharacterString.tagSet.tagImplicitly(tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 19))
+    encoding = "us-ascii"
 
     # Optimization for faster codec lookup
     typeId = AbstractCharacterString.getTypeId()
@@ -193,10 +195,8 @@ class TeletexString(AbstractCharacterString):
     #: Set (on class, not on instance) or return a
     #: :py:class:`~pyasn1.type.tag.TagSet` object representing ASN.1 tag(s)
     #: associated with |ASN.1| type.
-    tagSet = AbstractCharacterString.tagSet.tagImplicitly(
-        tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 20)
-    )
-    encoding = 'iso-8859-1'
+    tagSet = AbstractCharacterString.tagSet.tagImplicitly(tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 20))
+    encoding = "iso-8859-1"
 
     # Optimization for faster codec lookup
     typeId = AbstractCharacterString.getTypeId()
@@ -215,10 +215,8 @@ class VideotexString(AbstractCharacterString):
     #: Set (on class, not on instance) or return a
     #: :py:class:`~pyasn1.type.tag.TagSet` object representing ASN.1 tag(s)
     #: associated with |ASN.1| type.
-    tagSet = AbstractCharacterString.tagSet.tagImplicitly(
-        tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 21)
-    )
-    encoding = 'iso-8859-1'
+    tagSet = AbstractCharacterString.tagSet.tagImplicitly(tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 21))
+    encoding = "iso-8859-1"
 
     # Optimization for faster codec lookup
     typeId = AbstractCharacterString.getTypeId()
@@ -230,10 +228,8 @@ class IA5String(AbstractCharacterString):
     #: Set (on class, not on instance) or return a
     #: :py:class:`~pyasn1.type.tag.TagSet` object representing ASN.1 tag(s)
     #: associated with |ASN.1| type.
-    tagSet = AbstractCharacterString.tagSet.tagImplicitly(
-        tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 22)
-    )
-    encoding = 'us-ascii'
+    tagSet = AbstractCharacterString.tagSet.tagImplicitly(tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 22))
+    encoding = "us-ascii"
 
     # Optimization for faster codec lookup
     typeId = AbstractCharacterString.getTypeId()
@@ -245,10 +241,8 @@ class GraphicString(AbstractCharacterString):
     #: Set (on class, not on instance) or return a
     #: :py:class:`~pyasn1.type.tag.TagSet` object representing ASN.1 tag(s)
     #: associated with |ASN.1| type.
-    tagSet = AbstractCharacterString.tagSet.tagImplicitly(
-        tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 25)
-    )
-    encoding = 'iso-8859-1'
+    tagSet = AbstractCharacterString.tagSet.tagImplicitly(tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 25))
+    encoding = "iso-8859-1"
 
     # Optimization for faster codec lookup
     typeId = AbstractCharacterString.getTypeId()
@@ -260,10 +254,8 @@ class VisibleString(AbstractCharacterString):
     #: Set (on class, not on instance) or return a
     #: :py:class:`~pyasn1.type.tag.TagSet` object representing ASN.1 tag(s)
     #: associated with |ASN.1| type.
-    tagSet = AbstractCharacterString.tagSet.tagImplicitly(
-        tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 26)
-    )
-    encoding = 'us-ascii'
+    tagSet = AbstractCharacterString.tagSet.tagImplicitly(tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 26))
+    encoding = "us-ascii"
 
     # Optimization for faster codec lookup
     typeId = AbstractCharacterString.getTypeId()
@@ -275,16 +267,15 @@ class ISO646String(VisibleString):
     # Optimization for faster codec lookup
     typeId = AbstractCharacterString.getTypeId()
 
+
 class GeneralString(AbstractCharacterString):
     __doc__ = AbstractCharacterString.__doc__
 
     #: Set (on class, not on instance) or return a
     #: :py:class:`~pyasn1.type.tag.TagSet` object representing ASN.1 tag(s)
     #: associated with |ASN.1| type.
-    tagSet = AbstractCharacterString.tagSet.tagImplicitly(
-        tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 27)
-    )
-    encoding = 'iso-8859-1'
+    tagSet = AbstractCharacterString.tagSet.tagImplicitly(tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 27))
+    encoding = "iso-8859-1"
 
     # Optimization for faster codec lookup
     typeId = AbstractCharacterString.getTypeId()
@@ -296,9 +287,7 @@ class UniversalString(AbstractCharacterString):
     #: Set (on class, not on instance) or return a
     #: :py:class:`~pyasn1.type.tag.TagSet` object representing ASN.1 tag(s)
     #: associated with |ASN.1| type.
-    tagSet = AbstractCharacterString.tagSet.tagImplicitly(
-        tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 28)
-    )
+    tagSet = AbstractCharacterString.tagSet.tagImplicitly(tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 28))
     encoding = "utf-32-be"
 
     # Optimization for faster codec lookup
@@ -311,9 +300,7 @@ class BMPString(AbstractCharacterString):
     #: Set (on class, not on instance) or return a
     #: :py:class:`~pyasn1.type.tag.TagSet` object representing ASN.1 tag(s)
     #: associated with |ASN.1| type.
-    tagSet = AbstractCharacterString.tagSet.tagImplicitly(
-        tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 30)
-    )
+    tagSet = AbstractCharacterString.tagSet.tagImplicitly(tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 30))
     encoding = "utf-16-be"
 
     # Optimization for faster codec lookup
@@ -326,9 +313,7 @@ class UTF8String(AbstractCharacterString):
     #: Set (on class, not on instance) or return a
     #: :py:class:`~pyasn1.type.tag.TagSet` object representing ASN.1 tag(s)
     #: associated with |ASN.1| type.
-    tagSet = AbstractCharacterString.tagSet.tagImplicitly(
-        tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 12)
-    )
+    tagSet = AbstractCharacterString.tagSet.tagImplicitly(tag.Tag(tag.tagClassUniversal, tag.tagFormatSimple, 12))
     encoding = "utf-8"
 
     # Optimization for faster codec lookup

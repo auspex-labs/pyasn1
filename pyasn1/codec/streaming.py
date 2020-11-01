@@ -24,6 +24,7 @@ class CachingStreamWrapper(io.IOBase):
     The read bytes are kept in an internal cache until
     setting _markedPosition which may reset the cache.
     """
+
     def __init__(self, raw):
         self._raw = raw
         self._cache = io.BytesIO()
@@ -119,9 +120,7 @@ def asSeekableStream(substrate):
             return CachingStreamWrapper(substrate)
 
     except AttributeError:
-        raise error.UnsupportedSubstrateError(
-            "Cannot convert " + substrate.__class__.__name__ +
-            " to a seekable bit stream.")
+        raise error.UnsupportedSubstrateError("Cannot convert " + substrate.__class__.__name__ + " to a seekable bit stream.")
 
 
 def isEndOfStream(substrate):
