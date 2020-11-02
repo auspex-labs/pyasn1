@@ -47,14 +47,14 @@ class OctetsTestCase(BaseTestCase):
             assert not octets.octs2str(bytes([]))
 
         def test_isOctetsType(self):
-            assert octets.isOctetsType("abc") == False
-            assert octets.isOctetsType(123) == False
-            assert octets.isOctetsType(bytes()) == True
+            assert octets.isOctetsType("abc") is False
+            assert octets.isOctetsType(123) is False
+            assert octets.isOctetsType(bytes()) is True
 
         def test_isStringType(self):
-            assert octets.isStringType("abc") == True
-            assert octets.isStringType(123) == False
-            assert octets.isStringType(bytes()) == False
+            assert octets.isStringType("abc") is True
+            assert octets.isStringType(123) is False
+            assert octets.isStringType(bytes()) is False
 
         def test_ensureString(self):
             assert "abc".encode() == octets.ensureString("abc".encode())
@@ -93,14 +93,14 @@ class OctetsTestCase(BaseTestCase):
             assert not octets.octs2str("")
 
         def test_isOctetsType(self):
-            assert octets.isOctetsType("abc") == True
-            assert octets.isOctetsType(123) == False
-            assert octets.isOctetsType(unicode("abc")) == False
+            assert octets.isOctetsType("abc") is True
+            assert octets.isOctetsType(123) is False
+            assert octets.isOctetsType(unicode("abc")) is False
 
         def test_isStringType(self):
-            assert octets.isStringType("abc") == True
-            assert octets.isStringType(123) == False
-            assert octets.isStringType(unicode("abc")) == True
+            assert octets.isStringType("abc") is True
+            assert octets.isStringType(123) is False
+            assert octets.isStringType(unicode("abc")) is True
 
         def test_ensureString(self):
             assert "abc" == octets.ensureString("abc")

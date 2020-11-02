@@ -358,7 +358,7 @@ class BooleanPicklingTestCase(unittest.TestCase):
         serialised = pickle.dumps(old_asn1)
         assert serialised
         new_asn1 = pickle.loads(serialised)
-        assert new_asn1 == True
+        assert new_asn1 is True
 
 
 class BitStringTestCase(BaseTestCase):
